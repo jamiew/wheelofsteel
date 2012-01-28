@@ -1,0 +1,41 @@
+// Global variables
+
+console.log(our_data);
+var fader = our_data.data.performance.mixer.fader,
+    turntable = our_data.data.performance.turntable;
+
+float radius = 180;
+
+void setup(){
+  size(200, 200);
+  strokeWeight(5);
+  frameRate(30);
+}
+
+void draw(){
+
+  // Fill canvas grey
+  background( 255 );
+
+  // Set fill-color to blue
+  fill( 200, 200, 200 );
+
+  // Set stroke-color white
+  stroke(255);
+
+  // Draw circle
+  int X = width / 2;
+  int Y = height / 2;
+  ellipse( X, Y, radius, radius );
+
+  // Draw marker
+  float s = map(frameCount, 0, 60, 0, TWO_PI) - HALF_PI;
+
+  stroke(255);
+
+  strokeWeight(10);
+  line(X, Y, cos(s) * 100 + X, sin(s) * 100 + Y);
+
+
+}
+
