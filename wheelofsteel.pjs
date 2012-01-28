@@ -1,41 +1,55 @@
 // Global variables
 
-console.log(our_data);
-var fader = our_data.data.performance.mixer.fader,
-    turntable = our_data.data.performance.turntable;
+// var fader = our_data.data.performance.mixer.fader;
+var turntable = our_data.data.performance.turntable;
+var step, points, frame, prev_frame, diff;
 
-float radius = 180;
+float radius = 400;
 
 void setup(){
-  size(200, 200);
+  size(radius, radius);
   strokeWeight(5);
   frameRate(30);
+
+  step = Math.floor((1000/frameRate) / (1000/turntable.samplerate));
+  console.log(step);
+  points = turntable.data.p;
 }
 
 void draw(){
 
-  // Fill canvas grey
-  background( 255 );
-
-  // Set fill-color to blue
-  fill( 200, 200, 200 );
-
-  // Set stroke-color white
-  stroke(255);
-
-  // Draw circle
   int X = width / 2;
   int Y = height / 2;
+
+  // Fill canvas grey
+  background(255);
+
+  // Draw circle
+  fill(200, 200, 200);
+  stroke(255);
   ellipse( X, Y, radius, radius );
 
-  // Draw marker
+  // Draw second-line
   float s = map(frameCount, 0, 60, 0, TWO_PI) - HALF_PI;
-
   stroke(255);
+  strokeWeight(1);
+  line(X, Y, cos(s) * X + X, sin(s) * X + Y);
 
-  strokeWeight(10);
-  line(X, Y, cos(s) * 100 + X, sin(s) * 100 + Y);
+  // Draw turntable position
+  frame = points[frameCount * step];
+  if(prev_frame) diff = prev_frame - frame;
+  // console.log(diff);
 
+  stroke(50, 50, 250);
+  strokeWeight(15);
+
+  // rotation = diff % (10000.0/3)/(10000/3) * 2*PI;
+  rotation = diff % (10000.0/3)/(10000/3) * 2*PI - 3*PI;
+  line(X, Y, cos(rotation) * (X*0.92) + X, sin(rotation) * (Y*0.92) + Y);
+
+  prev_frame = frame;
+
+  if(frame == undefined) exit();
 
 }
 

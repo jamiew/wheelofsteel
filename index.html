@@ -6,7 +6,7 @@
   <style type="text/css" media="screen">
     body { background: #fff; color: #222; font-family: sans-serif; margin: 0 auto; text-align: center; }
     body, canvas { width: 800px; }
-    canvas { height: 200px; width: 200px; border: 5px solid #222; }
+    canvas { height: 400px; width: 400px; border: 2px solid #ccc; }
     a, a:hover { color: #9f9f77; }
     h1 { letter-spacing: -1px; color: #000; margin-left: 20px; }
     h2 { font-family: "Arial", sans-serif; font-weight: normal; }
@@ -23,8 +23,7 @@
 
   var our_data;
   function load_data(data) {
-    console.log(data);
-    our_data = data;
+    our_data = data; // TODO scope specifically to this scratch ID
     var canvasRef = document.createElement('canvas');
     var p = Processing.loadSketchFromSources(canvasRef, ['wheelofsteel.pjs']);
     document.getElementsByTagName('body')[0].appendChild(canvasRef);
