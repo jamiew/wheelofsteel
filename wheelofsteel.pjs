@@ -46,25 +46,26 @@ void draw(){
   frame = points[frameCount * step];
   if(prev_frame) diff = prev_frame - frame;
 
-  // Exit if data is gone
+  // Draw turntable position
+  // Exit if data is finished
+  stroke(50, 50, 200);
+  fill(50, 50, 200);
   if(frame == undefined) {
-    fill(255, 0, 0);
     textSize(40);
-    text("DONE", X, Y);
+    text("DONE", X-55, Y+10); // offset to compensate for text size
     exit();
   }
+  else {
+    strokeWeight(25);
+    rotation = map(frame, 0, 1800, 0, 2*PI);  // 1800 frames in a
+    rotation += PI; // move to the left side, I like it there
+    line(X, Y, cos(rotation) * (X*0.92) + X, sin(rotation) * (Y*0.92) + Y);
 
-  // Draw turntable position
-  stroke(50, 50, 250);
-  strokeWeight(25);
-  rotation = map(frame, 0, 1800, 0, 2*PI);  // 1800 frames in a
-  rotation += PI; // move to the left side, I like it there
-  line(X, Y, cos(rotation) * (X*0.92) + X, sin(rotation) * (Y*0.92) + Y);
+    // Display some info about what's going on
+    fill(200);
+    text(frame, 15, 25);
 
-  // Display some info about what's going on
-  fill(200);
-  text(frame, 15, 25);
-
-  prev_frame = frame;
+    prev_frame = frame;
+  }
 }
 
