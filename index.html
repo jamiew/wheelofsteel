@@ -31,11 +31,14 @@
 
   // inject script to load data
   var s = document.createElement('script');
-  if(window.location.host == 'localhost')
+
+ var server = "scratchbook.herokuapp.com", tagid = 3;
+  if(window.location.host == 'localhost') {
     server = "localhost:3000";
-  else
-    server = 'scratchbook.herokuapp.com';
-  s.setAttribute('src','http://' + server + '/data/13.json?callback=load_data');
+    tagid = 13;
+  }
+
+  s.setAttribute('src','http://' + server + '/data/' + tagid + '.json?callback=load_data');
   document.getElementsByTagName('body')[0].appendChild(s);
 
   </script>
