@@ -36,32 +36,27 @@ void draw(){
   stroke(180)
   arc(X, Y, 382, 382, PI+HALF_PI, (2*PI*progress) + PI+HALF_PI);
 
-  // // Draw second hand
-  // float s = map(frameCount, 0, 60, 0, TWO_PI) - HALF_PI;
-  // stroke(255);
-  // strokeWeight(1);
-  // line(X, Y, cos(s) * X + X, sin(s) * X + Y);
-
   // Draw turntable position
   frame = points[frameCount * step];
   if(prev_frame) diff = prev_frame - frame;
 
+  // Exit if data is gone
+  if(frame == undefined) {
+    fill(255, 0, 0);
+    textSize(40);
+    text("DONE", X, Y);
+    exit();
+  }
+
   stroke(50, 50, 250);
   strokeWeight(25);
-  // rotation = diff % (10000.0/3)/(10000/3) * 2*PI;
-  rotation = diff % (10000.0/3)/(10000/3) * 2*PI - 3*PI;
+  rotation = map(frame, 0, 1800, 0, 2*PI);  // 1800 frames in a
+  rotation += PI; // move to the left side, I like it there
   line(X, Y, cos(rotation) * (X*0.92) + X, sin(rotation) * (Y*0.92) + Y);
 
   // Display some info about what's going on
   fill(200);
   text(frame, 15, 25);
-
-  // Exit if data is gone
-  if(frame == undefined) {
-    fill(255, 0, 0);
-    text("DONE", X, Y);
-    exit();
-  }
 
   prev_frame = frame;
 }
