@@ -12,7 +12,6 @@ void setup(){
   frameRate(30);
 
   step = Math.floor((1000/frameRate) / (1000/turntable.samplerate));
-  console.log(step);
   points = turntable.data.p;
 }
 
@@ -38,7 +37,6 @@ void draw(){
   // Draw turntable position
   frame = points[frameCount * step];
   if(prev_frame) diff = prev_frame - frame;
-  // console.log(diff);
 
   stroke(50, 50, 250);
   strokeWeight(15);
@@ -49,6 +47,10 @@ void draw(){
 
   prev_frame = frame;
 
+  // Display some info about what's going on
+  text(frame, 15, 25);
+
+  // Exit if data is gone
   if(frame == undefined) exit();
 
 }
