@@ -21,6 +21,8 @@
 
   <script type="text/javascript">
 
+  // Callback handler
+  // Get our SML data then load our Processing.js sketch
   var our_data;
   function load_data(data) {
     our_data = data; // TODO scope specifically to this scratch ID
@@ -29,15 +31,16 @@
     document.getElementsByTagName('body')[0].appendChild(canvasRef);
   }
 
-  // inject script to load data
+  // Load our SML data from Scratchbook using JSONP
+  // I have this setup to load from my local server while I'm developing
+  // you probably want to comment this out and just use production data
+  if(window.location.host == 'localhost')
+    server = "localhost:3000", tagid = 13;
+  else
+    server = "scratchbook.herokuapp.com", tagid = 3;
+
+  // Inject a <script> that calls back to load_data()
   var s = document.createElement('script');
-
- var server = "scratchbook.herokuapp.com", tagid = 3;
-  if(window.location.host == 'localhost') {
-    server = "localhost:3000";
-    tagid = 13;
-  }
-
   s.setAttribute('src','http://' + server + '/data/' + tagid + '.json?callback=load_data');
   document.getElementsByTagName('body')[0].appendChild(s);
 
